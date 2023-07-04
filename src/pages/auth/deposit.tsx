@@ -1,5 +1,8 @@
+
+"use client"
 import { Auth } from "@/features/auth/Auth";
 import { depostAsync } from "@/features/auth/authSlice";
+import { AppDispatch } from "@/store";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -15,14 +18,16 @@ interface IUrl {
 const Deposit = (props: Props) => {
   const [state, setState] = useState<number>(0);
   const [amount ,setAmount] = useState<number>(100)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
   const [url, setUrl] = useState<IUrl>({
     amount: 100,
     upiId: "1234567890",
   });
   return (
+
     <Auth>
+      {!router.isFallback && <p>loading...</p>}
       {state === 0 && (
         <Formik
           initialValues={{ amount: amount }}
@@ -103,7 +108,7 @@ const Deposit = (props: Props) => {
               } 
               else{
                 dispatch(depostAsync({UTR:value.UTR,amount}))
-                router.push("/Auth/wallet",undefined,{shallow:true});
+                router.push("/auth/wallet",undefined,{shallow:true});
               }
             }}
             // validationSchema={SignupSchema}

@@ -1,5 +1,6 @@
+'use client'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '@/store'
+import { AppDispatch, RootState } from '@/store'
 import { Formik,
   FormikHelpers,
   FormikProps,
@@ -9,9 +10,10 @@ import { Formik,
 import { ToastContainer } from 'react-toastify'
 // import  Yup from 'yup'
 import Link from 'next/link'
+import { signupAsync } from '../auth/authSlice'
+import { ISignUpCredential } from '@/types'
 export default function SignUp() {
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch<AppDispatch>()
   return (
     <div className="mx-3 sm:justify-center md:items-center">
     <ToastContainer
@@ -27,8 +29,8 @@ export default function SignUp() {
         theme="colored"
       />
     <Formik
-      initialValues={{ name: "", mobile: "",password:"",confirmPassword:""}}
-      onSubmit={()=>{}/*handleSigUp*/}
+      initialValues={{ name: "", mobile: 0,password:"",confirmPassword:""}}
+      onSubmit={(value)=>dispatch(signupAsync(value))/*handleSigUp*/}
       // validationSchema={SignupSchema}
     >{({ errors, touched }) => (
 

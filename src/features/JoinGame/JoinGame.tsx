@@ -2,12 +2,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { JoinGameAsync, selectContestId } from './Slice'
+import { AppDispatch } from '@/store'
 type props ={
   setOpen :React.Dispatch<boolean>;
   number:number|undefined
 }
 export function JoinGame({setOpen,number}:props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [amount, setAmount] = useState<number>()
   const contestId = useSelector(selectContestId);
   return (

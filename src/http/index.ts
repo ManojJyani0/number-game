@@ -16,7 +16,7 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-api.interceptors.response.use((response) => response.data, (error) => error);
+// api.interceptors.response.use((response) => response.data, (error) => error);
 
 // login api route
 export const login = async (credential: ILoginCredential) => await api.post('/login', credential);

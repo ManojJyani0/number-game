@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import React from "react";
 import { APP_ICON_LINK, APP_NAME } from "../../../config";

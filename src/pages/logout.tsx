@@ -1,3 +1,4 @@
+'use client'
 import LogOut from '@/features/logout/LogOut'
 import React from 'react'
 
@@ -9,4 +10,4 @@ const LogOutPage = (props: Props) => {
   )
 }
 
-export default LogOut
+export default LogOutPage

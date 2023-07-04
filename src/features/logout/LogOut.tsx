@@ -1,11 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
+"use client"
+import { useDispatch } from 'react-redux'
 import { logout } from '../auth/authSlice'
+import { AppDispatch } from '@/store'
 export default function LogOut() {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  dispatch(logout())
-  window.localStorage.clear()
-  router.push("../../",undefined,{shallow:true})
-  return<></>
+  const dispatch = useDispatch<AppDispatch>()
+  dispatch(logout(""))
+  return<>
+    </>
 }

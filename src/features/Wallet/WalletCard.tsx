@@ -1,3 +1,5 @@
+
+"use client"
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -35,11 +37,11 @@ const WalletCard = (props: Props) => {
         </p>
         <div className="flex flex-col w-72">
           <button className="mt-2 bg-orange-700 text-white px-4 rounded-xl py-3"
-          onClick={()=>router.push("/Auth/deposit")}>
+          onClick={()=>router.push("/auth/deposit")}>
             Deposit Funds
           </button>
           <button className="mt-2 bg-green-900 text-white px-4 rounded-xl py-3"
-          onClick={()=>router.push("/Auth/withdrawal")}>
+          onClick={()=>router.push("/auth/withdrawal")}>
             Withdrawal funds
           </button>
         </div>

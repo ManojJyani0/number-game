@@ -1,10 +1,11 @@
+"use client"
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '@/store'
+import { AppDispatch, RootState } from '@/store'
 import { useRouter } from 'next/router'
 import { fetchCurrentGame } from '../JoinGame/Slice'
 export default function BalanceCard() {
   const amount = useSelector((state:RootState) => state.auth.amount)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 const router = useRouter()
   return (
     <div className={`flex flex-col `}>
@@ -13,7 +14,7 @@ const router = useRouter()
       <div className='flex justify-between items-center'>
         <button
           onClick={() => {
-            router.push('/Auth/wallet');
+            router.push('/auth/wallet');
           }}
           className='text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
           Recharge

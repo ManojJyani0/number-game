@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 type Props = {

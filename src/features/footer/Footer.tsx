@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import React from "react";
 
@@ -8,7 +9,7 @@ const Footer = (props: Props) => {
     <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
       <div className="flex h-full flex-shrink max-w-lg justify-between grid-cols-4 mx-auto font-medium">
         <Link
-          href={"/Auth"}
+          href={"/auth"}
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
         >
           <svg
@@ -25,7 +26,7 @@ const Footer = (props: Props) => {
           </span>
         </Link>
         <Link
-          href={"/Auth/wallet"}
+          href={"/auth/wallet"}
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
         >
           <svg
@@ -47,7 +48,7 @@ const Footer = (props: Props) => {
           </span>
         </Link>
         <Link
-          href={"/Auth/profile"}
+          href={"/auth/profile"}
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
         >
           <svg

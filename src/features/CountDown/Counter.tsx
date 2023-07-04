@@ -1,8 +1,10 @@
+'use client'
 import { useSelector, useDispatch } from 'react-redux'
 import Countdown from 'react-countdown'
 import { fetchCurrentGame, selectCurrentGame } from '../JoinGame/Slice';
 import { useEffect } from 'react';
-import { fetchContestAsync } from '../gameTable/tableSlice';
+import { fetchContestAsync } from '../JoinGame/Slice';
+import { AppDispatch } from '@/store';
 
 const Completionist = () => <span>You are good to go!</span>;
 const renderer = ({minutes, seconds, completed }:any) => {
@@ -14,8 +16,9 @@ const renderer = ({minutes, seconds, completed }:any) => {
 };
 export function CountDonw() {
   const liveGame = useSelector(selectCurrentGame)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   useEffect(()=>{
+    console.log("fetchCurrentGAme called")
     dispatch(fetchCurrentGame())
   },[liveGame.contestId])
   return (

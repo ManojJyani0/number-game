@@ -1,8 +1,10 @@
+'use client'
 // import { withdrawalRequest } from "@/http";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { withdrawalAsync } from "../auth/authSlice";
+import { AppDispatch } from "@/store";
 // import * as Yup from 'yup'
 type Props = {}
 // const BankDetailSchema = Yup.object().shape({
@@ -21,7 +23,7 @@ type Props = {}
 //     console.log(response)
 //   }
 const WithDrawal = (props: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   return (
     <div className="mx-3 sm:justify-center md:items-center">
       <Formik

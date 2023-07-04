@@ -1,6 +1,5 @@
 import { type } from 'os'
 import authReducer from '../features/auth/authSlice'
-import tableReducer from '../features/gameTable/tableSlice'
 import gameReducer from '@/features/JoinGame/Slice'
 import { configureStore } from '@reduxjs/toolkit'
 // ...
@@ -8,7 +7,6 @@ import { configureStore } from '@reduxjs/toolkit'
 export const  store = configureStore({
   reducer: {
     auth: authReducer,
-    table:tableReducer,
     game : gameReducer
 
   },
@@ -20,4 +18,5 @@ export type AppDispatch = typeof store.dispatch
 
 export type  AsyncThunkConfig = {
   state: RootState
+  
 }

@@ -1,11 +1,12 @@
+'use client'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '@/store'
+import { AppDispatch  } from '@/store'
 import { useEffect } from 'react'
-import { fetchContestAsync, selectContestList } from './tableSlice'
+import { fetchContestAsync, selectContestList } from '../JoinGame/Slice'
 
 export function Table() {
   const Games = useSelector(selectContestList)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     dispatch(fetchContestAsync())

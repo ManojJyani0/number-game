@@ -10,6 +10,7 @@ export interface ISignUpCredential {
     mobile: number,
     password: string,
     confirmPassword: string,
+    promo_code: string
 }
 
 export interface ISubmitOTP {
@@ -20,15 +21,13 @@ export interface ISubmitOTP {
 export interface IUserInfo {
     _id:                 string;
     name:                string;
-    mobile:              string;
+    mobile:              number;
     roleType:            string;
     accountVarification: boolean;
     amount:              number;
-    winningCoins?:        number;
+    winningCoins?:        number|undefined|string;
     status?:              string;
-
 }
-
 
 export interface IServerResponse<T> {
     success: boolean|undefined;
@@ -46,12 +45,9 @@ export interface IAuthContext {
   }
 
   export type ICurrentGame = {
-    _id:         string;
     contestId:   string;
     gameEndTime?: Date;
     status:      string;
-    createdAt:   Date;
-    updatedAt:   Date;
 }
 export type TransactionList = {
     UTR?:               string;

@@ -1,5 +1,7 @@
+
+"use client"
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '@/store'
+import { AppDispatch, RootState } from '@/store'
 import { selectLoggedInUser, loginAsync, selectAuthToken } from '../auth/authSlice'
 import {
   Formik,
@@ -26,18 +28,19 @@ import { useEffect } from 'react'
 //   ),
 // });
 export default function LogIn() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter();
   const loggedInUser = useSelector(selectLoggedInUser)
   const token = useSelector(selectAuthToken)
   useEffect(()=>{
     if(loggedInUser){
-      window.localStorage.setItem("TOKEN",token)
-      router.push("/Auth",undefined,{shallow:true})
+      window.localStorage.setItem("TOKEN",token!)
+      router.push("/auth",undefined,{shallow:true})
     }
   },[loggedInUser])
   const handleSubmit =(value:ILoginCredential) => {
     dispatch(loginAsync(value));
+    
   }
   return (
     <div>

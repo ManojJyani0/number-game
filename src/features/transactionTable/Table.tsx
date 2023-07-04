@@ -1,11 +1,11 @@
+'use client'
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
+import { AppDispatch, RootState } from "@/store";
 import { useEffect, useState } from "react";
-import { fetchTransactionAsync } from "../gameTable/tableSlice";
-import { current } from "@reduxjs/toolkit";
+import { fetchTransactionAsync } from "../auth/authSlice";
 export function Table() {
-  const transcations = useSelector((state: RootState) => state.table.transactions);
-  const dispatch = useDispatch();
+  const transcations = useSelector((state: RootState) => state.auth.transactions);
+  const dispatch = useDispatch<AppDispatch>();
   const [number,setNumber] = useState<number>(10)
   useEffect(()=>{
     dispatch(fetchTransactionAsync())
