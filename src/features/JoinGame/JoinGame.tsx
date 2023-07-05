@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
-import { JoinGameAsync, selectContestId } from './Slice'
+import { selectContestId } from './Slice'
 import { AppDispatch } from '@/store'
+import { JoinGameAsync } from '../auth/authSlice'
 type props ={
   setOpen :React.Dispatch<boolean>;
   number:number|undefined
@@ -29,6 +30,7 @@ export function JoinGame({setOpen,number}:props) {
                             initialValues={{ betAmount: amount }}
                             onSubmit={(value)=>{
                               dispatch(JoinGameAsync({...value,number,contestId}))
+                              console.log("GameJoined fun inisated")
                             }}
                             enableReinitialize={true}
                           >

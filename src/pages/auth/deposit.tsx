@@ -104,7 +104,7 @@ const Deposit = (props: Props) => {
             initialValues={{ UTR: "" }}
             onSubmit={async (value) => {
               if (value.UTR.length <= 10) {
-                //todo some tostyfi code here
+                alert("Enter a Valied UTR Number Plzz...")
               } 
               else{
                 dispatch(depostAsync({UTR:value.UTR,amount}))

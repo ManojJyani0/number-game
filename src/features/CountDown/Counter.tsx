@@ -2,7 +2,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import Countdown from 'react-countdown'
 import { fetchCurrentGame, selectCurrentGame } from '../JoinGame/Slice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchContestAsync } from '../JoinGame/Slice';
 import { AppDispatch } from '@/store';
 
@@ -15,11 +15,12 @@ const renderer = ({minutes, seconds, completed }:any) => {
   }
 };
 export function CountDonw() {
+  // const [count, setCount] = useState<number>(1)
   const liveGame = useSelector(selectCurrentGame)
   const dispatch = useDispatch<AppDispatch>()
   useEffect(()=>{
-    console.log("fetchCurrentGAme called")
     dispatch(fetchCurrentGame())
+    // setCount(ct=>ct+1)
   },[liveGame.contestId])
   return (
     <div>
@@ -40,6 +41,7 @@ export function CountDonw() {
               onComplete={()=>{
                 dispatch(fetchCurrentGame())
                 dispatch(fetchContestAsync())
+                // setCount(1)
               }}
             />
           </div>

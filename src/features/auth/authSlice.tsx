@@ -5,7 +5,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
-import { depositRequest, fetchTransactions, login, me, signup, withdrawalRequest } from "@/http";
+import { depositRequest, fetchTransactions, joinGame, login, me, signup, withdrawalRequest } from "@/http";
 import { IServerResponse, IUserInfo } from "@/types";
 import { AxiosResponse } from "axios";
 interface Transaction {
@@ -26,6 +26,7 @@ interface InitialState {
   winningCoins?: number | undefined | string;
   status?: string;
   transactions: Transaction[],
+  joined:boolean,
   notification :{
     type:string,
     message: string,
@@ -48,12 +49,13 @@ const initialState: InitialState = {
     status: "",
     transactionType: ""
   }],
+  joined:false,
   notification:{
     type:"",
     message:""
   }
 };
-export const fetchTransactionAsync = createAsyncThunk<Transaction[],void,AsyncThunkConfig>("table/transaction", async () => {
+export const fetchTransactionAsync = createAsyncThunk<Transaction[],void,AsyncThunkConfig>("auth/transaction", async () => {
   const response: AxiosResponse<IServerResponse<Transaction[]>> = await fetchTransactions();
   return response.data.data;
 })
@@ -70,6 +72,18 @@ export const signupAsync = createAsyncThunk(
     }
   }
 );
+export const JoinGameAsync = createAsyncThunk<any, any, AsyncThunkConfig>(
+  "auth/join",
+  async (value, { rejectWithValue }) => {
+    try {
+      const response = await joinGame(value);
+      return response.data.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const loginAsync = createAsyncThunk(
   "auth/login",
   async (value: any, { rejectWithValue }) => {
@@ -85,10 +99,11 @@ export const loginAsync = createAsyncThunk(
   }
 );
 
-export const fetchUserInfo = createAsyncThunk("auth/user", async ({}, {rejectWithValue}) => {
+export const fetchUserInfo = createAsyncThunk<IUserInfo,string, AsyncThunkConfig>("auth/user", async ( value,{rejectWithValue}) => {
   try {
     const response: AxiosResponse<IServerResponse<IUserInfo>> = await me();
-    return response.data;
+    return response.data.data;
+
   } catch (error:any) {
     return rejectWithValue(error.response.data)
   }
@@ -114,7 +129,7 @@ export const withdrawalAsync = createAsyncThunk<any, any, AsyncThunkConfig>(
     const response: AxiosResponse = await withdrawalRequest(value);
     return response.data;
     }catch(error:any){
-      return rejectWithValue(error.response)
+      return rejectWithValue(error.response.data)
     }
   }
 );
@@ -151,7 +166,6 @@ export const authSlice = createSlice({
       })
       .addCase(loginAsync.fulfilled, (state, action: PayloadAction<any>) => {
         state.status = "idle";
-        // console.log(action.payload)
         state.token = action.payload;
         state.loggedInUser = true;
         state.notification.message = "Login Successfuly Done";
@@ -165,6 +179,7 @@ export const authSlice = createSlice({
         state.token = "";
       })
       .addCase(fetchUserInfo.fulfilled, (state, action: PayloadAction<any>) => {
+        console.log(action)
         state.status = "idle";
         state._id = action.payload._id;
         state.name = action.payload.name;
@@ -176,6 +191,22 @@ export const authSlice = createSlice({
         state.notification.message = "Let's Enjoy you Game.";
         state.notification.type = "success"
       })
+      .addCase(JoinGameAsync.pending, (state) => {
+        state.status = "idle";
+      })
+      .addCase(JoinGameAsync.fulfilled, (state, action) => {
+        console.log(action);
+        state.status = "idle";
+        state.notification.message = "You Joined this Game successfully wait for the results"
+        state.notification.type = "success"
+        state.joined = true;
+      }).addCase(JoinGameAsync.rejected, (state, action:PayloadAction<any>) => {
+        console.log(action);
+        state.status = "idle";
+        console.log(action.payload)
+        state.notification.message = action.payload.data.message
+        state.notification.type ="error"
+      })
       .addCase(fetchUserInfo.rejected, (state, action) => {
         state.status = "idle";
       })
@@ -184,9 +215,15 @@ export const authSlice = createSlice({
       })
       .addCase(depostAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        console.log(action.payload)
+        state.notification.message="action.payload.data"
+        state.notification.type = "success"
       })
       .addCase(depostAsync.rejected, (state, action) => {
         state.status = "idle";
+        console.log(action.payload)
+        state.notification.message="action.payload.data"
+        state.notification.type = "error"
         //todo there is doing for some notification 0r totstyfy code here
       })
       .addCase(withdrawalAsync.pending, (state) => {
