@@ -1,9 +1,9 @@
 "use client";
 import PinInput from "react-pin-input";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/store";
-import { SubmitOTPAsync } from "../auth/authSlice";
+import { SubmitOTPAsync, selectaccountVarification } from "../auth/authSlice";
 import { genrateOTP } from "@/http";
 import { AxiosResponse } from "axios";
 import { IServerResponse } from "@/types";
@@ -16,8 +16,10 @@ const OTPValidate = (props: Props) => {
   const [send, setSend] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>()
   const [sid, setSID] = useState<string>("")
-  
-  
+  const accountVarification = useSelector(selectaccountVarification);
+  useEffect(()=>{
+
+  },[accountVarification])  
   const handleSendOTP =async () => {
     const response :AxiosResponse<IServerResponse<any>> = await genrateOTP();
     if(response.status==200){
@@ -96,6 +98,7 @@ const OTPValidate = (props: Props) => {
           }
             </div>
         </div>
+
       </div>
     </>
   );

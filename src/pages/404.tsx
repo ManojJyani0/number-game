@@ -1,7 +1,11 @@
+import Head from "next/head";
 import Link from "next/link";
 
 export default function Custom404() {
     return <section className="bg-white dark:bg-gray-900 ">
+      <Head>
+        <title>Opps Sorry for the Inconveniences</title>
+      </Head>
     <div className="container flex items-center min-h-screen px-6 py-12 mx-auto">
       <div>
         <p className="text-sm font-medium text-blue-500 dark:text-blue-400">

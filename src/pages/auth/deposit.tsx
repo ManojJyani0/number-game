@@ -1,40 +1,36 @@
 
 "use client"
 import { Auth } from "@/features/auth/Auth";
-import { depostAsync, selectURL } from "@/features/auth/authSlice";
+import { depostAsync } from "@/features/auth/authSlice";
 import { AppDispatch } from "@/store";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { APP_NAME } from "../../../config";
+import Head from "next/head";
 
 type Props = {};
 
-interface IUrl {
-  amount: number;
-  upiId: string;
-}
 
 const Deposit = (props: Props) => {
   const [state, setState] = useState<number>(0);
   const [amount ,setAmount] = useState<number>(100)
   const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
-  const payURL = useSelector(selectURL);
-  const [url, setUrl] = useState<IUrl>({
-    amount: 100,
-    upiId: "1234567890",
-  });
+  
   return (
 
     <Auth>
-      {!router.isFallback && <p>loading...</p>}
+      <Head>
+        <title>Deposit Your Dreams </title>
+      </Head>
+      {!router.isFallback && <p>loading....</p>}
       {state === 0 && (
         <Formik
           initialValues={{ amount: amount }}
           onSubmit={(value) => {
             if (value?.amount >= 100) {
-              setUrl((currentState) => ({ ...currentState }));
               setState((currentState) => currentState + 1);
               setAmount(value.amount)
             }
@@ -84,7 +80,7 @@ const Deposit = (props: Props) => {
       {state === 1 && (
         <>
           <a
-            href={`upi://pay?pa=9660119161@upi&pn=milliner number&am=${url.amount}&cu=INR`}
+            href={`upi://pay?pa=9660119161@ybl&pn=Sunil Kumar Dudi=${amount}&cu=INR`}
             className="mt-4 text-white"
           >
             <button

@@ -1,11 +1,17 @@
 'use client'
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { APP_ICON_LINK, APP_NAME } from "../../../config";
+import Loader from "../loader";
+import { useSelector } from "react-redux";
+import { selectLoading } from "../auth/authSlice";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
+  const isLoading = useSelector(selectLoading)
+  useEffect(()=>{
+  },[isLoading])
   return (
     <>
       <nav className={`bg-white border-gray-200 dark:bg-gray-900 border-b-2 rounded-lg my-2  `}>
@@ -18,6 +24,7 @@ const Navbar = (props: Props) => {
           </Link>
         </div>
       </nav>
+      {isLoading=="loading" && <Loader/>}
     </>
   );
 };

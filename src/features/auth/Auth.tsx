@@ -1,22 +1,24 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import Footer from "../footer/Footer";
-import { AppDispatch, RootState } from "@/store";
+import { AppDispatch} from "@/store";
 import {
   fetchUserInfo,
   logout,
+  selectAuthToken,
+  selectLoggedInUser,
   selectaccountVarification,
   setToken,
 } from "./authSlice";
 import { useEffect } from "react";
 import Custom404 from "@/pages/404";
 import OTPValidate from "../OTPvalidation";
+import LogIn from "../LogIn/Login";
 type Props = {};
 export function Auth({ children }: Props & { children: React.ReactNode }) {
-  const loggedInUser = useSelector(
-    (state: RootState) => state.auth.loggedInUser
-  );
+  const loggedInUser = useSelector(selectLoggedInUser);
   const accountVarification = useSelector(selectaccountVarification);
+  const token = useSelector(selectAuthToken)
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     if (loggedInUser) {
@@ -25,10 +27,10 @@ export function Auth({ children }: Props & { children: React.ReactNode }) {
     }
   }, [loggedInUser]);
 
-  if (loggedInUser) {
+  if (loggedInUser && token) {
     return (
       <>
-        {!accountVarification ? (
+        {loggedInUser && !accountVarification ? (
           <>
           <OTPValidate/>
           </>
@@ -44,7 +46,7 @@ export function Auth({ children }: Props & { children: React.ReactNode }) {
     dispatch(logout(""))
     return (
       <>
-        <Custom404 />
+        <LogIn/>
       </>
     );
   }

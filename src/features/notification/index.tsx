@@ -5,11 +5,11 @@ import { selectNotification } from '../auth/authSlice'
 const Notification = () => {
     const notification = useSelector(selectNotification)
 useEffect(()=>{
-    switch (notification.type) {
-        case "success":
+    switch ((notification.type).toUpperCase()) {
+        case "SUCCESS":
             toast.success(notification.message)
             break;
-        case "error":toast.error(notification.message);
+        case "ERROR":toast.error(notification.message);
             break;
         default:
             break;

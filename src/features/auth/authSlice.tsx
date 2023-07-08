@@ -31,7 +31,7 @@ interface InitialState {
     type:string,
     message: string,
   },
-  payURL:string
+  
 }
 const initialState: InitialState = {
   loggedInUser: false,
@@ -55,7 +55,6 @@ const initialState: InitialState = {
     type:"",
     message:""
   },
-  payURL:""
 };
 export const fetchTransactionAsync = createAsyncThunk<Transaction[],void,AsyncThunkConfig>("auth/transaction", async () => {
   const response: AxiosResponse<IServerResponse<Transaction[]>> = await fetchTransactions();
@@ -168,9 +167,8 @@ export const authSlice = createSlice({
       })
       .addCase(signupAsync.fulfilled, (state, action: PayloadAction<any>) => {
         state.status = "idle";
-        console.log(action.payload.data);
-        state.token = action.payload.data;
-        state.loggedInUser = true;
+        state.notification.message = "Your Account Created Successfully"
+        state.notification.type = "success"
       })
       .addCase(signupAsync.rejected, (state, action:PayloadAction<any>) => {
         state.status = "idle";
@@ -185,13 +183,13 @@ export const authSlice = createSlice({
         state.status = "idle";
         state.token = action.payload;
         state.loggedInUser = true;
-        state.notification.message = "Login Successfuly Done";
+        state.notification.message = action.payload?.data?.message
         state.notification.type = "success";
       })
       .addCase(loginAsync.rejected, (state, action: PayloadAction<any>) => {
         state.status = "idle";
         console.log(action)
-        state.notification.message = action.payload?.data?.message
+        state.notification.message = action.payload?.data?.message 
         state.notification.type ="error"
         state.token = "";
       })
@@ -205,12 +203,23 @@ export const authSlice = createSlice({
         state.mobile = action.payload.mobile;
         state.accountVarification = action.payload.accountVarification;
         state.winningCoins = action.payload.winningCoins;
-        state.payURL = action.payload.payURL;
         state.notification.message = "Let's Enjoy you Game.";
         state.notification.type = "success"
       })
-      .addCase(JoinGameAsync.pending, (state) => {
+      .addCase(fetchUserInfo.rejected, (state, action:PayloadAction<any>) => {
         state.status = "idle";
+        state._id = ""
+        state.name = ""
+        state.amount = 0
+        state.roleType = ""
+        state.mobile = 0
+        state.accountVarification = false
+        state.winningCoins = 0
+        state.notification.message = action.payload?.data?.message 
+        state.notification.type ="error"
+      })
+      .addCase(JoinGameAsync.pending, (state) => {
+        state.status = "loading";
       })
       .addCase(JoinGameAsync.fulfilled, (state, action) => {
         console.log(action);
@@ -225,11 +234,8 @@ export const authSlice = createSlice({
         state.notification.message = action.payload?.data?.message
         state.notification.type ="error"
       })
-      .addCase(fetchUserInfo.rejected, (state, action) => {
-        state.status = "idle";
-      })
       .addCase(depostAsync.pending, (state, action) => {
-        state.status = "Loading";
+        state.status = "loading";
       })
       .addCase(depostAsync.fulfilled, (state, action) => {
         state.status = "idle";
@@ -244,7 +250,7 @@ export const authSlice = createSlice({
         
       })
       .addCase(withdrawalAsync.pending, (state) => {
-        state.status = "Loading";
+        state.status = "loading";
       })
       .addCase(withdrawalAsync.fulfilled, (state) => {
         state.status = "idle";
@@ -257,11 +263,12 @@ export const authSlice = createSlice({
         state.notification.type ="error"
       })
       .addCase(fetchTransactionAsync.pending, (state) => {
-        state.status = "Loading";
+        state.status = "loading";
       }).addCase(fetchTransactionAsync.fulfilled, (state, action) => {
         state.transactions = [...action.payload]
         state.status = 'idel'
       }).addCase(SubmitOTPAsync.fulfilled,(state,action:PayloadAction<any>)=>{
+        state.accountVarification = true;
         state.notification.message = "Your Account Varifiaction Successfuly done."
         state.notification.type = "success"
       }).addCase(SubmitOTPAsync.rejected,(state,action:PayloadAction<any>)=>{
@@ -271,7 +278,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const selectURL  = (state :RootState) => state.auth.payURL;
+export const selectLoading = (state:RootState) => state.auth.status;
 export const selectaccountVarification = (state:RootState) =>state.auth.accountVarification;
 export const selectNotification = (state:RootState) => state.auth.notification;
 export const selectUserData = (state: RootState) => state.auth;

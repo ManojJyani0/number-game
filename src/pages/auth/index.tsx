@@ -4,6 +4,7 @@ import Modal from '@/features/Modal/Modal'
 import { Auth } from '@/features/auth/Auth'
 import BalanceCard from '@/features/blanceCard/BalanceCard';
 import { Table } from '@/features/gameTable/Table';
+import Head from 'next/head';
 import React, { useState } from 'react'
 type OpenModalProps = {
   open:boolean,
@@ -17,6 +18,9 @@ const Home = (props: Props) => {
   const [number,setNumber] = useState<number>()
    return (
    <Auth>
+    <Head>
+        <title>Let's Play </title>
+      </Head>
     <BalanceCard/>
     <CountDonw />
     <Modal open={open} setOpen={setOpen} number={number}>

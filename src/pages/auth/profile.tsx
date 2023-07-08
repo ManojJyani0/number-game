@@ -7,6 +7,7 @@ type Props = {}
 const Profile = (props: Props) => {
   return (
     <Auth>
+      
       <ProfileCard></ProfileCard>
     </Auth>
   )

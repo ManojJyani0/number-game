@@ -7,6 +7,7 @@ import { AppDispatch } from "@/store";
 import { fetchBankAccounts } from "@/http";
 import { AxiosResponse } from "axios";
 import { IServerResponse } from "@/types";
+import Head from "next/head";
 
 interface BankAccount{
   accountHolderName:string,
@@ -15,6 +16,7 @@ interface BankAccount{
   IFSC_code:string,
 }
 const WithDrawal = () => {
+
   const dispatch = useDispatch<AppDispatch>()
   const [initialValue,setInitialValue ] = useState({})
   const [bankAccounts,setAccounts]  = useState<BankAccount[]>([])
@@ -36,6 +38,9 @@ const WithDrawal = () => {
   }
   return (
     <div className="mx-3 sm:justify-center md:items-center">
+    <Head>
+      <title>Withdrawal Requesting...</title>
+    </Head>
       <div>
             <button
               onClick={handleFetchAccount}

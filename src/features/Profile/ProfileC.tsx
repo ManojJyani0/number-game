@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { Auth } from "../auth/Auth";
 import { logout } from "../auth/authSlice";
 import Link from "next/link";
+import Head from "next/head";
 
 type Props = {};
 
@@ -19,6 +20,9 @@ const ProfileCard = (props: Props) => {
   };
   return (
     <Auth>
+      <Head>
+        <title>{userInfo.name}</title>
+      </Head>
       <div
         className="flex mx-2 flex-col  justify-between items-center"
         style={{ height: "75vh" }}
