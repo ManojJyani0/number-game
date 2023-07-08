@@ -1,12 +1,12 @@
 
 "use client"
 import { Auth } from "@/features/auth/Auth";
-import { depostAsync } from "@/features/auth/authSlice";
+import { depostAsync, selectURL } from "@/features/auth/authSlice";
 import { AppDispatch } from "@/store";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
 
@@ -20,6 +20,7 @@ const Deposit = (props: Props) => {
   const [amount ,setAmount] = useState<number>(100)
   const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
+  const payURL = useSelector(selectURL);
   const [url, setUrl] = useState<IUrl>({
     amount: 100,
     upiId: "1234567890",
@@ -83,7 +84,7 @@ const Deposit = (props: Props) => {
       {state === 1 && (
         <>
           <a
-            href={`upi://pay?pa=7688973310@upi&pn=milliner number&am=${url.amount}&cu=INR`}
+            href={`upi://pay?pa=9660119161@upi&pn=milliner number&am=${url.amount}&cu=INR`}
             className="mt-4 text-white"
           >
             <button

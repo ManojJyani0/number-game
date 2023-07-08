@@ -2,10 +2,15 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { AppDispatch, RootState } from '@/store'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { fetchCurrentGame } from '../JoinGame/Slice'
 export default function BalanceCard() {
+  const [refresh, setRefresh ] = useState<number>(0)
   const amount = useSelector((state:RootState) => state.auth.amount)
   const dispatch = useDispatch<AppDispatch>()
+  useEffect(()=>{
+    dispatch(fetchCurrentGame())
+  },[refresh])
 const router = useRouter()
   return (
     <div className={`flex flex-col `}>
@@ -21,7 +26,7 @@ const router = useRouter()
         </button>
         <button
           type='button'
-          onClick={()=>dispatch(fetchCurrentGame())}
+          onClick={()=>setRefresh(current=>current+1)}
           className='text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white'
           // data-modal-hide='staticModal'
           >

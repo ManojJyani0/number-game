@@ -1,32 +1,16 @@
-
 "use client"
 import { useSelector, useDispatch } from 'react-redux'
-import { AppDispatch, RootState } from '@/store'
-import { selectLoggedInUser, loginAsync, selectAuthToken } from '../auth/authSlice'
+import { AppDispatch } from '@/store'
+import { selectLoggedInUser, loginAsync, selectAuthToken, setToken } from '../auth/authSlice'
 import {
   Formik,
-  FormikHelpers,
-  FormikProps,
   Form,
   Field,
-  FieldProps,
 } from 'formik'
-import { ToastContainer } from 'react-toastify'
-// import  Yup from 'yup'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ILoginCredential } from '@/types'
 import { useEffect } from 'react'
-
-
-
-// const SignupSchema : = Yup.object().shape({
-//   mobile: Yup.number(),
-//   password: Yup.string().matches(
-//     new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/),
-//     "Password not matches"
-//   ),
-// });
 export default function LogIn() {
   const dispatch = useDispatch<AppDispatch>()
   const router = useRouter();
@@ -34,10 +18,17 @@ export default function LogIn() {
   const token = useSelector(selectAuthToken)
   useEffect(()=>{
     if(loggedInUser){
-      window.localStorage.setItem("TOKEN",token!)
+      window.localStorage.setItem("TOKEN",token)
       router.push("/auth",undefined,{shallow:true})
     }
   },[loggedInUser])
+
+  useEffect(()=>{
+    let token:string|null|undefined = window.localStorage.getItem("TOKEN");
+    if(token){
+      dispatch(setToken(token))
+    }
+  },[])
   const handleSubmit =(value:ILoginCredential) => {
     dispatch(loginAsync(value));
     
@@ -50,7 +41,6 @@ export default function LogIn() {
           <Formik
             initialValues={{ password: "", mobile: "" }}
             onSubmit={handleSubmit}
-          // validationSchema={SignupSchema}
           >
             {({ errors, touched }) => (
               <Form>

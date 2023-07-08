@@ -5,7 +5,7 @@ import { IP_ADD } from "../../config";
 const isBrowser = typeof window !== "undefined";
 
 const api = axios.create({
-  baseURL: `http://${IP_ADD}:3000/api/public`,
+  baseURL: `http://${IP_ADD}/api/public`,
 });
 
 api.interceptors.request.use(async (config) => {
@@ -36,7 +36,7 @@ export const last10Reconres = async ()=> await api.get("/lastRecords");
 export const winningCoins =async () => await api.get("/winningPrices")
 //fetch transactions 
 export const fetchTransactions =async () => await api.get('/transactions');
-
+export const fetchBankAccounts = async () => await api.get("/bankAccounts");
 export const withdrawalRequest = async (value:any)=> await api.post("/withdrawal",value);
 
 export const depositRequest =async (value:any) => await api.post('/deposit',value);

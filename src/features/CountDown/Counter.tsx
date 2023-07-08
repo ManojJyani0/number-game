@@ -2,7 +2,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import Countdown from 'react-countdown'
 import { fetchCurrentGame, selectCurrentGame } from '../JoinGame/Slice';
-import { useEffect, useState } from 'react';
 import { fetchContestAsync } from '../JoinGame/Slice';
 import { AppDispatch } from '@/store';
 
@@ -18,10 +17,7 @@ export function CountDonw() {
   // const [count, setCount] = useState<number>(1)
   const liveGame = useSelector(selectCurrentGame)
   const dispatch = useDispatch<AppDispatch>()
-  useEffect(()=>{
-    dispatch(fetchCurrentGame())
-    // setCount(ct=>ct+1)
-  },[liveGame.contestId])
+  
   return (
     <div>
        <div className="flex flex-col mx-4 max-w-sm">
@@ -44,6 +40,7 @@ export function CountDonw() {
                 // setCount(1)
               }}
             />
+            
           </div>
         </div>
 
