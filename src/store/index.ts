@@ -1,4 +1,3 @@
-import { type } from 'os'
 import authReducer from '../features/auth/authSlice'
 import gameReducer from '@/features/JoinGame/Slice'
 import { configureStore } from '@reduxjs/toolkit'

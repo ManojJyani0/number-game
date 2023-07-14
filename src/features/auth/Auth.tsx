@@ -11,7 +11,6 @@ import {
   setToken,
 } from "./authSlice";
 import { useEffect } from "react";
-import Custom404 from "@/pages/404";
 import OTPValidate from "../OTPvalidation";
 import LogIn from "../LogIn/Login";
 type Props = {};

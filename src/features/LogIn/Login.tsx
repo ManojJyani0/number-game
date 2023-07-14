@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ILoginCredential } from '@/types'
 import { useEffect } from 'react'
+import QR_CODE from '../QR_Code'
 export default function LogIn() {
   const dispatch = useDispatch<AppDispatch>()
   const router = useRouter();

@@ -27,6 +27,7 @@ export interface IUserInfo {
     amount:              number;
     winningCoins?:        number|undefined|string;
     status?:              string;
+    upi?:                  string;
 }
 
 export interface IServerResponse<T> {

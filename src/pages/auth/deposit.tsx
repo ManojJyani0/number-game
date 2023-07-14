@@ -1,7 +1,7 @@
 
 "use client"
 import { Auth } from "@/features/auth/Auth";
-import { depostAsync } from "@/features/auth/authSlice";
+import { depostAsync, selectUPI } from "@/features/auth/authSlice";
 import { AppDispatch } from "@/store";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { APP_NAME } from "../../../config";
 import Head from "next/head";
+import QR_CODE from "@/features/QR_Code";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const Deposit = (props: Props) => {
   const [amount ,setAmount] = useState<number>(100)
   const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
+  const upi = useSelector(selectUPI)
   
   return (
 
@@ -79,8 +81,11 @@ const Deposit = (props: Props) => {
 
       {state === 1 && (
         <>
+            <QR_CODE amount={amount}/>
           <a
-            href={`upi://pay?pa=9660119161@ybl&pn=Sunil Kumar Dudi=${amount}&cu=INR`}
+            href={"upi://pay?pa=UPI_ID&am=AMOUNT&cu=INR"
+            .replace("UPI_ID", upi)
+            .replace("AMOUNT", amount.toString())}
             className="mt-4 text-white"
           >
             <button
@@ -89,7 +94,7 @@ const Deposit = (props: Props) => {
                 "bg-blue-700 mt-20 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500  focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               }
             >
-              Prossed to Payment
+              Prossed With Payment App
             </button>{" "}
           </a>
         </>

@@ -31,6 +31,7 @@ interface InitialState {
     type:string,
     message: string,
   },
+  upi:string;
   
 }
 const initialState: InitialState = {
@@ -55,6 +56,7 @@ const initialState: InitialState = {
     type:"",
     message:""
   },
+  upi:""
 };
 export const fetchTransactionAsync = createAsyncThunk<Transaction[],void,AsyncThunkConfig>("auth/transaction", async () => {
   const response: AxiosResponse<IServerResponse<Transaction[]>> = await fetchTransactions();
@@ -205,6 +207,7 @@ export const authSlice = createSlice({
         state.winningCoins = action.payload.winningCoins;
         state.notification.message = "Let's Enjoy you Game.";
         state.notification.type = "success"
+        state.upi= action.payload.upi
       })
       .addCase(fetchUserInfo.rejected, (state, action:PayloadAction<any>) => {
         state.status = "idle";
@@ -217,6 +220,8 @@ export const authSlice = createSlice({
         state.winningCoins = 0
         state.notification.message = action.payload?.data?.message 
         state.notification.type ="error"
+        state.loggedInUser= false;
+        state.token=""
       })
       .addCase(JoinGameAsync.pending, (state) => {
         state.status = "loading";
@@ -278,6 +283,7 @@ export const authSlice = createSlice({
   },
 });
 
+export const selectUPI = (state:RootState) => state.auth.upi;
 export const selectLoading = (state:RootState) => state.auth.status;
 export const selectaccountVarification = (state:RootState) =>state.auth.accountVarification;
 export const selectNotification = (state:RootState) => state.auth.notification;
